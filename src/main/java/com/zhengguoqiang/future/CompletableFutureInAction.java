@@ -85,7 +85,7 @@ public class CompletableFutureInAction {
         return value * 10d;
     }
 
-    private static double get(){
+    public static double get(){
         double result = 0;
         try {
             Thread.sleep(RANDOM.nextInt(10000));

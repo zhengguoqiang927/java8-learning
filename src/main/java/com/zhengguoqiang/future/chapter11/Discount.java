@@ -79,6 +79,7 @@ public class Discount {
                 .map(future -> future.thenApply(Quote::parse))
                 .map(future -> future.thenCompose(quote -> CompletableFuture.supplyAsync(() ->
                         Discount.applyDiscount(quote), executorService)));
+        //thenAccept 定义如何处理ComletableFuture返回的结果；一旦CompletableFuture计算得到结果，thenAccept就返回一个CompletableFuture<Void>对象
         //CompletableFuture<Void>对象能做的事情有限，只能等待其运行结束
 //        Stream<CompletableFuture<Void>> completableFutureStream = futureStream.map(f -> f.thenAccept(System.out::println));
 //        CompletableFuture[] completableFutures = completableFutureStream.toArray(CompletableFuture[]::new);
