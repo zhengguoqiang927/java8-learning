@@ -1,4 +1,4 @@
-# java8-learning
+# Java并发编程
 
 ## Fork/Join
 
@@ -120,9 +120,9 @@ Thread类中的枚举值State定义了线程的状态，任意时刻线程只会
 
 ##### wait和sleep的区别
 
-wait()是一个用于线程同步的实例方法，是java.lang.Object类中的方法，只能在synchronized同步代码块内调用。
-
-Thread.sleep()方法能被在任何地方调用，该方法终止当前线程，但是不释放任何锁。
+1. wait是Object类的方法，sleep是Thread类的方法
+2. wait必须在获取锁的前提下使用，并且会释放锁；而sleep可以再任何场景下使用，再获得锁的情况下使用也不会释放锁
+3. wait可以通过nofity或者notifyAll方法进行唤醒；sleep不能被唤醒
 
 **wait方法使用注意事项：**
 
@@ -144,4 +144,3 @@ synchronized (obj) {
 ```
 
 ##### wait和notify
-
