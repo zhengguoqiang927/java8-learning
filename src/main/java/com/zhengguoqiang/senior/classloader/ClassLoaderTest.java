@@ -1,15 +1,12 @@
 package com.zhengguoqiang.senior.classloader;
 
 import com.alibaba.fastjson.JSON;
-import com.zhengguoqiang.utils.FileHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.log4j.BasicConfigurator;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.security.SecureClassLoader;
-import java.util.List;
 
 /**
  * @author zhengguoqiang
