@@ -11,5 +11,8 @@ public class StringTest {
         System.out.println(a == b);
         System.out.println(a.equals(b));
         int[] array = new int[]{};
+
+        String s = "Aman";
+        System.out.println(s.hashCode());
     }
 }
