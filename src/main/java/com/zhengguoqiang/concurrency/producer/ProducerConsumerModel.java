@@ -50,16 +50,14 @@ public class ProducerConsumerModel {
 
     public static void main(String[] args) {
         ProducerConsumerModel pcm = new ProducerConsumerModel();
-        Stream.of("P1","P2").forEach(name -> {
-            new Thread(name){
-                @Override
-                public void run() {
-                    while (true){
-                        pcm.produce();
-                    }
+        Stream.of("P1","P2").forEach(name -> new Thread(name){
+            @Override
+            public void run() {
+                while (true){
+                    pcm.produce();
                 }
-            }.start();
-        });
+            }
+        }.start());
 
         Stream.of("C1","C2").forEach(name -> {
             new Thread(name){
