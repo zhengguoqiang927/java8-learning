@@ -35,6 +35,8 @@ public class Account {
     }
 
     //方案三
+    //采用细粒度锁，只对涉及转账的两个账户上锁
+    //缺点：容易造成死锁
     void transfer3(Account target,int amt){
         synchronized (this){
             synchronized (target){
@@ -44,5 +46,10 @@ public class Account {
                 }
             }
         }
+    }
+
+    //方案四
+    void transfer4(Account target,int amt){
+
     }
 }
