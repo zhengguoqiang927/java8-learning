@@ -72,14 +72,16 @@ public class Account {
     void transfer4(Account target, int amt) {
         System.out.println(this.name + " 给 " + target.name + " 转账：" + amt + "元");
         Allocator allocator = Allocator.getInstance();
-        while (!allocator.apply(this, target)) {
-            System.out.println(this.name + " 给 " + target.name + " 转账暂时不满足条件，继续申请...");
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        while (!allocator.apply(this, target)) {
+//            System.out.println(this.name + " 给 " + target.name + " 转账暂时不满足条件，继续申请...");
+//            try {
+//                Thread.sleep(1);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        allocator.apply(this,target);
+        System.out.println(this.name + " 和 " + target.name + " 账户达到可转账状态！！！");
         try {
             synchronized (this) {
                 synchronized (target) {
@@ -145,18 +147,40 @@ class Allocator {
 
     private final List<Object> als = new ArrayList<>();
 
-    synchronized boolean apply(Object from, Object to) {
-        if (als.contains(from) || als.contains(to)) {
-            return false;
-        } else {
-            als.add(from);
-            als.add(to);
+    //一次性申请所有资源
+//    synchronized boolean apply(Object from, Object to) {
+//        if (als.contains(from) || als.contains(to)) {
+//            return false;
+//        } else {
+//            als.add(from);
+//            als.add(to);
+//        }
+//        return true;
+//    }
+
+    //释放资源
+//    synchronized void free(Object from, Object to) {
+//        als.remove(from);
+//        als.remove(to);
+//    }
+
+    //等待-通知机制优化
+    synchronized void apply(Object from,Object to){
+        while (als.contains(from) || als.contains(to)){
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-        return true;
+        als.add(from);
+        als.add(to);
     }
 
-    synchronized void free(Object from, Object to) {
+    synchronized void free(Object from,Object to){
         als.remove(from);
         als.remove(to);
+        //尽量使用notifyAll()；notify()会随机的唤醒等待队列中的一个线程，notifyAll()会唤醒等待队列中的所有线程。
+        notifyAll();
     }
 }
