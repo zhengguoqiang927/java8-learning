@@ -1,12 +1,12 @@
 package com.zhengguoqiang.concurrency.geektime;
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class BlockedQueue<T> {
+public class BlockedQueue {
     //存放元素的素组
     private final Object[] items;
 
@@ -17,59 +17,186 @@ public class BlockedQueue<T> {
     private int putIndex;
 
     //队列中的元素总数
-    private int count;
+//    private int count;
+    private final AtomicInteger count = new AtomicInteger(0);
 
-    public BlockedQueue(int capacity){
-        if (capacity <= 0){
+//    private final ReentrantLock lock = new ReentrantLock();
+
+    //插入锁
+    private final ReentrantLock putLock = new ReentrantLock();
+    //弹出锁
+    private final ReentrantLock takeLock = new ReentrantLock();
+
+//    private final Condition condition = lock.newCondition();
+    //条件变量：队列不满
+//    private final Condition notFull = lock.newCondition();
+    private final Condition notFull = putLock.newCondition();
+    //条件变量：队列不空
+//    private final Condition notEmpty = lock.newCondition();
+    private final Condition notEmpty = takeLock.newCondition();
+
+    public BlockedQueue(int capacity) {
+        if (capacity <= 0) {
             throw new IllegalArgumentException();
         }
         items = new Object[capacity];
     }
 
-    public  void put(Object o) throws InterruptedException {
-        while (true){
-            //队列未满才执行入队操作
-            if (count != items.length){
-                //实际执行入队操作
-                enqueue(o);
-                break;
-            }
-            Thread.sleep(200);
+    /**
+     * 唤醒等待队列不满的线程即生产者线程
+     */
+    private void signalNotFull(){
+        putLock.lock();
+        try{
+            //唤醒一个等待不满的生产者线程
+            notFull.signal();
+        }finally {
+            putLock.unlock();
         }
+    }
+
+    /**
+     * 唤醒等待队列非空线程即消费者线程
+     */
+    private void signalNotEmpty(){
+        //唤醒消费者线程需要先获取弹出锁takeLock
+        takeLock.lock();
+        try{
+            //唤醒一个等待不空的消费者线程
+            notEmpty.signal();
+        }finally {
+            takeLock.unlock();
+        }
+    }
+
+    public void put(Object o) throws InterruptedException {
+//        synchronized (this)
+        putLock.lockInterruptibly();
+        try{
+            while (count.get() == items.length) {
+//                this.wait();
+//                condition.await();
+                notFull.await();
+            }
+
+            //实际执行入队操作
+            enqueue(o);
+
+            //唤醒所有等待消费的线程
+//            this.notifyAll();
+//            condition.signalAll();
+//            notEmpty.signalAll();
+        }finally {
+            putLock.unlock();
+        }
+        //唤醒等待队列不空的消费者线程
+        //为了防止死锁，不能在释放putLock之前获取takeLock
+        signalNotEmpty();
     }
 
     public Object take() throws InterruptedException {
-        while (true){
+//        synchronized (this)
+        takeLock.lockInterruptibly();
+        Object e = null;
+        try{
             //队列不空才执行出队操作
-            if (count != 0){
-                return dequeue();
+            while (count.get() == 0) {
+//                this.wait();
+//                condition.await();
+                notEmpty.await();
             }
-            Thread.sleep(200);
+            e = dequeue();
+            //唤醒等待生产的线程
+//            this.notifyAll();
+//            condition.signalAll();
+//            notFull.signalAll();
+
+        }finally {
+            takeLock.unlock();
         }
+
+        //唤醒等待队列不满的生产者线程
+        signalNotFull();
+        return e;
     }
 
-    private void enqueue(Object o){
+    private void enqueue(Object o) {
         //将对象放入putIndex指向的位置
         items[putIndex] = o;
         //putIndex向后移动一位，如果已到数组末尾，则回到开头
-        if (++putIndex == items.length){
+        if (++putIndex == items.length) {
             putIndex = 0;
         }
         //元素总数加一
-        count++;
+        count.getAndIncrement();
     }
 
-    private Object dequeue(){
+    private Object dequeue() {
         //取出takeIndex位置的元素，并将其置空
         Object o = items[takeIndex];
         items[takeIndex] = null;
 
         //takeIndex向后移动一位，如果已到数组末尾，则回到开头
-        if (++takeIndex == items.length){
+        if (++takeIndex == items.length) {
             takeIndex = 0;
         }
         //元素总数减一
-        count--;
+        count.getAndDecrement();
         return o;
+    }
+
+
+    public static void main(String[] args) throws InterruptedException {
+        //创建一个大小为2的阻塞队列
+        final BlockedQueue queue = new BlockedQueue(2);
+
+        //生产者消费者线程各创建2个
+        final int threads = 400;
+
+        //每个线程执行10次
+        final int times = 100;
+
+        //线程列表，用于等待所有线程完成
+        List<Thread> threadList = new ArrayList<>(threads * 2);
+        long startTime = System.currentTimeMillis();
+
+        // 创建2个生产者线程，向队列中并发放入数字0到19，每个线程放入10个数字
+        for (int i = 0; i < threads; i++) {
+            final int offset = i * times;
+            Thread producer = new Thread(() -> {
+                for (int j = 0; j < times; j++) {
+                    try {
+                        queue.put(offset + j);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            threadList.add(producer);
+            producer.start();
+        }
+
+        //创建2个消费者线程，从队列中弹出20次数字并打印
+        for (int i = 0; i < threads; i++) {
+            Thread consumer = new Thread(() -> {
+                try {
+                    for (int j = 0; j < times; j++) {
+                        Integer integer = (Integer) queue.take();
+                        System.out.println(integer);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            threadList.add(consumer);
+            consumer.start();
+        }
+
+        for (Thread thread : threadList) {
+            thread.join();
+        }
+
+        long endTime = System.currentTimeMillis();
+        System.out.println(String.format("总耗时：%.2fs", (endTime - startTime) / 1e3));
     }
 }
