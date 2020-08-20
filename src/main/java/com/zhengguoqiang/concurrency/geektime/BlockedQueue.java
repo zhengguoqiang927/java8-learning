@@ -6,6 +6,15 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * 阻塞队列
+ * 优化流程：
+ * 1.while(true)：消耗CPU
+ * 2.wait-notify等待通知机制实现：解决1中消耗CPU的问题，但是notifyAll()引起所有等待的线程被唤起，包括生产者线程和消费者线程
+ * 3.lock-condition多个条件变量优化：同一个lock，两个条件变量notFull和notEmpty，这样只会唤醒指定类别的线程
+ * 4.细粒度锁实现：3中生产者线程和消费者线程公用统一把锁lock，可将其拆分成putLock和takeLock两把锁，并分别创建条件变量，但要注意死锁的风险
+ * 5.细节优化：只有队列为空或者已满时才会进行阻塞唤醒操作，平时不会进行这些操作只会正常生产和消费
+ */
 public class BlockedQueue {
     //存放元素的素组
     private final Object[] items;
