@@ -22,12 +22,11 @@ public class ByteArrayStream {
         }
 
         try {
-            Reader reader = new InputStreamReader(new FileInputStream(""),"UTF-8");
+            Reader reader = new InputStreamReader(new FileInputStream(""), StandardCharsets.UTF_8);
             Writer writer = new OutputStreamWriter(new FileOutputStream("xxx"));
             Reader reader1 = new BufferedReader(new FileReader(new File("")));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+            System.out.println(reader.read());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
