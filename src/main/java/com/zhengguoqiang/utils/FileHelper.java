@@ -1,17 +1,13 @@
 package com.zhengguoqiang.utils;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author zhengguoqiang
  */
-@Slf4j
 public class FileHelper {
 
     public static List<String> getUniqueLibPath(String... dirs) throws IOException {
@@ -35,7 +31,7 @@ public class FileHelper {
     private static List<File> getFiles(String dir, String... extension){
         File file = new File(dir);
         if (!file.isDirectory()){
-            log.info("this is not a directory...");
+//            log.info("this is not a directory...");
             return null;
         }else {
             List<File> fileList = new ArrayList<>();

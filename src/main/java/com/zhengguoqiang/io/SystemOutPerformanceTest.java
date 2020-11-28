@@ -1,10 +1,17 @@
 package com.zhengguoqiang.io;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 public class SystemOutPerformanceTest {
 
-    private static final String line1 = "[stdout] very very long line very very long line very very long line very very long line very very long line very very long line very very long line very very long line";
+    private static Logger logger = Logger.getLogger(SystemOutPerformanceTest.class.getName());
+
+//    private static final String line1 = "[stdout] very very long line very very long line very very long line very very long line very very long line very very long line very very long line very very long line";
+    private static final String line1 = "[stdout] very very long line";
     private static final String line2 = "[file] very very long line very very long line very very long line very very long line very very long line very very long line very very long line very very long line\n";
     private static final String line3 = "[/dev/stdout] very very long line very very long line very very long line very very long line very very long line very very long line very very long line very very long line\n";
 
@@ -21,6 +28,7 @@ public class SystemOutPerformanceTest {
         File f2 = new File("/dev/stdout");
         long t3 = file(f2,line3,count);
 
+        logger.info("lines:" + String.format("%,d",count));
         System.out.println("lines: " + String.format("%,d", count));
         System.out.println("System.out.println: " + String.format("%,d", t1) + " ms");
         System.out.println("file: " + String.format("%,d", t2) + " ms");

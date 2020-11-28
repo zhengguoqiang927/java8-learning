@@ -1,7 +1,6 @@
 package com.zhengguoqiang.senior.classloader;
 
 import com.zhengguoqiang.utils.FileHelper;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -13,7 +12,7 @@ import java.util.List;
 /**
  * @author zhengguoqiang
  */
-@Slf4j
+
 public class GlobalClassLoader {
     private static Method addURL;
     private static URLClassLoader system;
@@ -35,7 +34,7 @@ public class GlobalClassLoader {
 
     public static void addURL2SystemClassLoader(URL url){
         try {
-            log.info("append jar to classpath:" + url.toString());
+//            log.info("append jar to classpath:" + url.toString());
             addURL.invoke(system,url);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
