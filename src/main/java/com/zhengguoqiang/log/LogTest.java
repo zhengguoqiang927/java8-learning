@@ -5,6 +5,11 @@ import org.apache.commons.logging.LogFactory;
 
 public class LogTest {
 
+    public void print(String s){
+        Log log = LogFactory.getLog(LogTest.class);
+        log.info("xxxx");
+    }
+
     public static void main(String[] args) {
 
 //        Log log = LogFactory.getLog(LogTest.class);
