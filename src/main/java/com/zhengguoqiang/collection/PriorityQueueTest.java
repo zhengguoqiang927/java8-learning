@@ -6,7 +6,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.PriorityBlockingQueue;
 
 //https://www.javazhiyin.com/25500.html
-
+//https://soulmachine.gitbooks.io/system-design/content/cn/bigdata/heavy-hitters.html
 public class PriorityQueueTest {
 
     PriorityBlockingQueue<Double> queue;
