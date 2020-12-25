@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.PriorityBlockingQueue;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class StringTest {
     private static final String a = "123";
@@ -171,6 +172,11 @@ public class StringTest {
         String all = "B10,0.8,0.74,1,1";
         boolean b = seed.substring(seed.length() - 3).equals(all.substring(all.length() - 3));
         System.out.println(b);
+        String t1 = "B10,0.8,0.74,0,1,0,0,1,1,1,1,0,1,0,0,1,1,1,1,0,1,0,0,1,1,1,1,0,1,0,0,1,1,1,1,0,1,0,0,1,1,1,1,0,1,0,0,1,1,1,1,0,1,0,0,1,1,1,1,0,1,0,0,1,1,1,1";
+        String[] split = t1.split(",");
+//        Arrays.stream(split).skip(3).map(Byte::valueOf);
+        long count = Arrays.stream(split).skip(3).filter("0"::equals).count();
+
     }
 
 

@@ -25,7 +25,7 @@ public class Solution {
 
     int thresold;
 
-    int lastIndex = 3;
+    int lastIndex = 129;
 
     class TargetObject implements Comparable<TargetObject> {
         private String seed;
@@ -170,7 +170,8 @@ public class Solution {
                 while ((s = bisAll.readLine()) != null) {
                     String[] split = s.split(",");
                     allS.put(split[0], s);
-                    String a255 = s.substring(s.length() - lastIndex);
+                    String a255 = Arrays.stream(split).skip(lastIndex).filter("0.0"::equals).count() + "";
+//                            s.substring(s.length() - lastIndex);
                     if (allMap.containsKey(a255)) {
                         allMap.get(a255).add(split[0]);
                     } else {
@@ -184,13 +185,14 @@ public class Solution {
             }
         }).runAfterBoth(CompletableFuture.runAsync(() -> {
             for (String seed:seedList){
-                String s255 = seed.substring(seed.length() - lastIndex);
-                if (seedMap.containsKey(s255)){
-                    seedMap.get(s255).add(seed);
+                String count = Arrays.stream(seed.split(",")).skip(lastIndex).filter("0.0"::equals).count() + "";
+//                String s255 = seed.substring(seed.length() - lastIndex);
+                if (seedMap.containsKey(count)){
+                    seedMap.get(count).add(seed);
                 }else{
                     List<String> tmp = new ArrayList<>();
                     tmp.add(seed);
-                    seedMap.put(s255,tmp);
+                    seedMap.put(count,tmp);
                 }
             }
         }),new ComputeTask()).join();
@@ -218,7 +220,7 @@ public class Solution {
         String seedFile = "/Users/zhengguoqiang/Downloads/java/input/seed.txt";
         String allFile = "/Users/zhengguoqiang/Downloads/java/input/all.txt";
         Solution solution = new Solution();
-        solution.process(seedFile, allFile, 5, null);
+        solution.process(seedFile, allFile, 7, null);
 
 
 //        String seed = "A1,0.52,0.1,1,0";
