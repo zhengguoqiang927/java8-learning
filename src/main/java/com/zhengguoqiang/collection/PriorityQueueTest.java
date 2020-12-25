@@ -5,6 +5,8 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.PriorityBlockingQueue;
 
+//https://www.javazhiyin.com/25500.html
+
 public class PriorityQueueTest {
 
     PriorityBlockingQueue<Double> queue;
