@@ -20,7 +20,7 @@ public class ClassLoaderTest {
         GlobalClassLoader.addSystemClassPathFolder(path);
         DynamicClassLoader classLoader = new DynamicClassLoader();
         try {
-            Class<?> aClass = classLoader.loadClass("com.bj58.fang.commercial.post.Init");
+            Class<?> aClass = classLoader.loadClass("com.zhengguoqiang.senior.classloader.TestA");
             Object o = aClass.newInstance();
 //            log.info("Hash:{}",o.hashCode());
             System.out.println(aClass.getSimpleName());
@@ -32,7 +32,7 @@ public class ClassLoaderTest {
     }
 }
 
-class DynamicClassLoader extends SecureClassLoader{
-    public DynamicClassLoader(){
+class DynamicClassLoader extends SecureClassLoader {
+    public DynamicClassLoader() {
     }
 }

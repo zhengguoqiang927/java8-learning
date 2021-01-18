@@ -26,16 +26,16 @@ public class JavassistClass {
         //ClassFile：用于创建一个新的类文件
         //FieldInfo：用于向类中添加一个新的字段
         ClassFile cf = new ClassFile(false,
-                "com.zhengguoqiang.senior.bytecode.JavassistGeneratedClass",null);
+                "com.zhengguoqiang.senior.bytecode.JavassistGeneratedClass", null);
         cf.setInterfaces(new String[]{"java.lang.Cloneable"});
 
-        FieldInfo f = new FieldInfo(cf.getConstPool(),"id","I");
+        FieldInfo f = new FieldInfo(cf.getConstPool(), "id", "I");
         f.setAccessFlags(AccessFlag.PUBLIC);
         cf.addField(f);
 
         ClassPool classPool = ClassPool.getDefault();
         Field[] fields = classPool.makeClass(cf).toClass().getFields();
-        assertEquals(fields[0].getName(),"id");
+        assertEquals(fields[0].getName(), "id");
     }
 
     @Test
@@ -47,7 +47,7 @@ public class JavassistClass {
         CodeIterator ci = ca.iterator();
 
         List<String> operations = new LinkedList<>();
-        while (ci.hasNext()){
+        while (ci.hasNext()) {
             int index = ci.next();
             int op = ci.byteAt(index);
             operations.add(Mnemonic.OPCODE[op]);
@@ -68,7 +68,7 @@ public class JavassistClass {
     public void addFieldToClass() throws NotFoundException, CannotCompileException {
         ClassFile cf = ClassPool.getDefault().get("com.zhengguoqiang.senior.bytecode.Point").getClassFile();
 
-        FieldInfo f = new FieldInfo(cf.getConstPool(),"id","I");
+        FieldInfo f = new FieldInfo(cf.getConstPool(), "id", "I");
         f.setAccessFlags(AccessFlag.PUBLIC);
         cf.addField(f);
 
@@ -83,21 +83,21 @@ public class JavassistClass {
         ClassFile cf = ClassPool.getDefault().get("com.zhengguoqiang.senior.bytecode.Point").getClassFile();
         Bytecode code = new Bytecode(cf.getConstPool());
         code.addAload(0);
-        code.addInvokespecial("java/lang/Object",MethodInfo.nameInit,"()V");
+        code.addInvokespecial("java/lang/Object", MethodInfo.nameInit, "()V");
         code.addReturn(null);
 
-        MethodInfo minfo = new MethodInfo(cf.getConstPool(),MethodInfo.nameInit,"()V");
+        MethodInfo minfo = new MethodInfo(cf.getConstPool(), MethodInfo.nameInit, "()V");
         minfo.setCodeAttribute(code.toCodeAttribute());
         cf.addMethod(minfo);
 
         CodeIterator ci = code.toCodeAttribute().iterator();
         List<String> operations = new LinkedList<>();
-        while (ci.hasNext()){
+        while (ci.hasNext()) {
             int index = ci.next();
             int op = ci.byteAt(index);
             operations.add(Mnemonic.OPCODE[op]);
         }
 
-        assertEquals(operations,Arrays.asList("aload_0","invokespecial","return"));
+        assertEquals(operations, Arrays.asList("aload_0", "invokespecial", "return"));
     }
 }

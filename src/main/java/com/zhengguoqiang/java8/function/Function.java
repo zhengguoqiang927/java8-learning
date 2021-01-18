@@ -47,17 +47,17 @@ public class Function {
         return result;
     }
 
-    private static void consumer(List<Apple> list, Consumer<Apple> consumer){
-        for (Apple apple:list){
+    private static void consumer(List<Apple> list, Consumer<Apple> consumer) {
+        for (Apple apple : list) {
             consumer.accept(apple);
         }
     }
 
-    private static Apple functionWeightDouble(Apple apple, java.util.function.Function<Apple,Apple> function){
+    private static Apple functionWeightDouble(Apple apple, java.util.function.Function<Apple, Apple> function) {
         return function.apply(apple);
     }
 
-    private static Apple supplierApple(Supplier<Apple> supplier){
+    private static Apple supplierApple(Supplier<Apple> supplier) {
         return supplier.get();
     }
 

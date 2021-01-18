@@ -13,16 +13,16 @@ public class ProducerConsumerModel {
 
     private volatile boolean isProduced = false;
 
-    public void produce(){
-        synchronized (LOCK){
-            if (isProduced){
+    public void produce() {
+        synchronized (LOCK) {
+            if (isProduced) {
                 try {
                     System.out.println("Producer Thread " + Thread.currentThread().getName() + " enter waiting...");
                     LOCK.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }else {
+            } else {
                 i++;
                 System.out.println("Producer P->" + i + ",Thread:" + Thread.currentThread().getName());
                 LOCK.notify();
@@ -31,13 +31,13 @@ public class ProducerConsumerModel {
         }
     }
 
-    public void consumer(){
-        synchronized (LOCK){
-            if (isProduced){
+    public void consumer() {
+        synchronized (LOCK) {
+            if (isProduced) {
                 System.out.println("Consumer C->" + i + ",Thread:" + Thread.currentThread().getName());
                 LOCK.notify();
                 isProduced = false;
-            }else {
+            } else {
                 try {
                     System.out.println("Consumer Thread " + Thread.currentThread().getName() + " enter waiting...");
                     LOCK.wait();
@@ -50,20 +50,20 @@ public class ProducerConsumerModel {
 
     public static void main(String[] args) {
         ProducerConsumerModel pcm = new ProducerConsumerModel();
-        Stream.of("P1","P2").forEach(name -> new Thread(name){
+        Stream.of("P1", "P2").forEach(name -> new Thread(name) {
             @Override
             public void run() {
-                while (true){
+                while (true) {
                     pcm.produce();
                 }
             }
         }.start());
 
-        Stream.of("C1","C2").forEach(name -> {
-            new Thread(name){
+        Stream.of("C1", "C2").forEach(name -> {
+            new Thread(name) {
                 @Override
                 public void run() {
-                    while (true){
+                    while (true) {
                         pcm.consumer();
                     }
                 }

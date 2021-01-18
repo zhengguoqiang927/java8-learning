@@ -60,28 +60,29 @@ public class CreateStream {
         return Stream.iterate(0, n -> n + 2).limit(10);
     }
 
-    private static Stream<Double> createStreamFromGenerator(){
+    private static Stream<Double> createStreamFromGenerator() {
         return Stream.generate(Math::random).limit(10);
     }
 
-    private static Stream<Obj> creatObjStreamFromGenerator(){
+    private static Stream<Obj> creatObjStreamFromGenerator() {
         return Stream.generate(new ObjSupplier()).limit(10);
     }
 
-    private static class ObjSupplier implements Supplier<Obj>{
+    private static class ObjSupplier implements Supplier<Obj> {
         private int index = 0;
         private Random random = new Random(System.currentTimeMillis());
+
         @Override
         public Obj get() {
             index = random.nextInt(100);
-            return new Obj(index,"Name -> " + index);
+            return new Obj(index, "Name -> " + index);
         }
     }
 
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    static class Obj{
+    static class Obj {
         private int id;
         private String name;
     }

@@ -9,7 +9,7 @@ import java.util.List;
 public class CustomListCollectorTest {
 
     public static void main(String[] args) {
-        String[] arrs = new String[]{"johnson","zheng","java 8","learning","com"};
+        String[] arrs = new String[]{"johnson", "zheng", "java 8", "learning", "com"};
         ToListCollector<String> collector = new ToListCollector<>();
         List<String> result = Arrays.stream(arrs)
                 .parallel()

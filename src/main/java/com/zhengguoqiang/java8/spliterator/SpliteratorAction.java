@@ -49,8 +49,8 @@ public class SpliteratorAction {
             return StreamSupport.stream(new MySpliterator(), false);
         }
 
-        public Stream<String> parallelStream(){
-            return StreamSupport.stream(new MySpliterator(),true);
+        public Stream<String> parallelStream() {
+            return StreamSupport.stream(new MySpliterator(), true);
         }
 
         private class MySpliterator implements Spliterator<String> {

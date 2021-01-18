@@ -16,7 +16,7 @@ public class MethodReference {
 
         //2.实例方法，需要提供初始值
         BiFunction<String, Integer, Character> biFunction = String::charAt;
-        Character character = biFunction.apply("hello zhengguoqiang",3);
+        Character character = biFunction.apply("hello zhengguoqiang", 3);
         System.out.println(character);
 
         //3.通过已实例化的对象直接进行方法引用
@@ -25,11 +25,11 @@ public class MethodReference {
         Character character1 = characterFunction.apply(3);
         System.out.println(character1);
 
-        BiFunction<String,Integer,Apple> appleBiFunction = Apple::new;
+        BiFunction<String, Integer, Apple> appleBiFunction = Apple::new;
         Apple red = appleBiFunction.apply("red", 100);
         System.out.println(red);
 
-        ThreeFunction<String,String,Integer,ComplexApple> threeFunction = ComplexApple::new;
+        ThreeFunction<String, String, Integer, ComplexApple> threeFunction = ComplexApple::new;
         ComplexApple complexApple = threeFunction.apply("HongFuShi", "red", 100);
         System.out.println(complexApple);
     }

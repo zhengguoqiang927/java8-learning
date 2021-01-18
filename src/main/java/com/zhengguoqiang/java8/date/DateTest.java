@@ -47,17 +47,17 @@ public class DateTest {
         System.out.println(localDate.getDayOfWeek());
     }
 
-    private static void testLocalTime(){
+    private static void testLocalTime() {
         LocalTime localTime = LocalTime.now();
         System.out.println(localTime.getHour());
         System.out.println(localTime.getMinute());
         System.out.println(localTime.getSecond());
     }
 
-    private static void testLocalDateTime(){
+    private static void testLocalDateTime() {
         LocalDate localDate = LocalDate.now();
         LocalTime localTime = LocalTime.now();
-        LocalDateTime localDateTime = LocalDateTime.of(localDate,localTime);
+        LocalDateTime localDateTime = LocalDateTime.of(localDate, localTime);
         System.out.println(localDateTime.toString());
     }
 
@@ -69,22 +69,22 @@ public class DateTest {
         System.out.println(duration.toMillis());
     }
 
-    private static void testDuration(){
+    private static void testDuration() {
         LocalTime start = LocalTime.now();
         LocalTime end = start.minusHours(1);
         Duration between = Duration.between(start, end);
         System.out.println(between.toHours());
     }
 
-    private static void testPeriod(){
-        Period period = Period.between(LocalDate.of(2019,5,1),
-                LocalDate.of(2019,8,1));
+    private static void testPeriod() {
+        Period period = Period.between(LocalDate.of(2019, 5, 1),
+                LocalDate.of(2019, 8, 1));
         System.out.println(period.getYears());
         System.out.println(period.getMonths());
         System.out.println(period.getDays());
     }
 
-    private static void testDateFormat(){
+    private static void testDateFormat() {
         LocalDate localDate = LocalDate.now();
         String format = localDate.format(DateTimeFormatter.BASIC_ISO_DATE);
         String format1 = localDate.format(DateTimeFormatter.ISO_LOCAL_DATE);
@@ -95,13 +95,13 @@ public class DateTest {
         System.out.println(localDate.format(dateTimeFormatter));
     }
 
-    private static void testParse(){
+    private static void testParse() {
         String date = "20190806";
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.BASIC_ISO_DATE);
         System.out.println(localDate.getYear());
     }
 
-    private static void tranferDateToLocalDate(){
+    private static void tranferDateToLocalDate() {
 
         /*
             1. Date -> java.time

@@ -23,11 +23,11 @@ public class OptionalUsage {
     }
 
 
-    private static String getInsuranceName(Insurance insurance){
+    private static String getInsuranceName(Insurance insurance) {
         return Optional.ofNullable(insurance).map(Insurance::getName).orElse("unknown");
     }
 
-    private static String getInsuranceNameByOptional(Person person){
+    private static String getInsuranceNameByOptional(Person person) {
         return Optional.ofNullable(person)
                 .map(Person::getCar)
                 .map(Car::getInsurance)

@@ -1,7 +1,6 @@
 package com.zhengguoqiang.java8.function;
 
 /**
- *
  * @author zhengguoqiang
  */
 public class Apple {

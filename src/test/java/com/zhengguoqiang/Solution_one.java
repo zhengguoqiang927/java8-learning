@@ -126,7 +126,7 @@ public class Solution_one {
         BigDecimal f = new BigDecimal(fenzi);
         double t = Math.sqrt(fenmuA) * Math.sqrt(fenmuB);
         BigDecimal m = new BigDecimal(t);
-        return new TargetObject(targetKey, f.divide(m,8,BigDecimal.ROUND_HALF_UP).doubleValue());
+        return new TargetObject(targetKey, f.divide(m, 8, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
 
@@ -142,7 +142,7 @@ public class Solution_one {
         List<TargetObject> result = new ArrayList<>(outputCount);
 
         seedList = Files.readAllLines(Paths.get(seedFile));
-        queue = new PriorityBlockingQueue<>(outputCount/2);
+        queue = new PriorityBlockingQueue<>(outputCount / 2);
         thresold = outputCount;
 
         //{"key":"A1","value":[0.5,0,3,1,1]}
@@ -151,7 +151,7 @@ public class Solution_one {
         //{"B1":[B1,0.5,0.3,0,1]}
         allS = new ConcurrentHashMap<>();
         //{"key":"B1","value":["A1","A2","A1"]}
-        allMap = new ConcurrentHashMap<>(outputCount/2);
+        allMap = new ConcurrentHashMap<>(outputCount / 2);
 
         //a[0]=[A1,A2,A3],a[1] = [A1,A2]
         List<Set<String>> seedArray = new ArrayList<>(128);

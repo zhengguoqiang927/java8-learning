@@ -36,7 +36,7 @@ public class BlockedQueue {
     //弹出锁
     private final ReentrantLock takeLock = new ReentrantLock();
 
-//    private final Condition condition = lock.newCondition();
+    //    private final Condition condition = lock.newCondition();
     //条件变量：队列不满
 //    private final Condition notFull = lock.newCondition();
     private final Condition notFull = putLock.newCondition();
@@ -54,12 +54,12 @@ public class BlockedQueue {
     /**
      * 唤醒等待队列不满的线程即生产者线程
      */
-    private void signalNotFull(){
+    private void signalNotFull() {
         putLock.lock();
-        try{
+        try {
             //唤醒一个等待不满的生产者线程
             notFull.signal();
-        }finally {
+        } finally {
             putLock.unlock();
         }
     }
@@ -67,13 +67,13 @@ public class BlockedQueue {
     /**
      * 唤醒等待队列非空线程即消费者线程
      */
-    private void signalNotEmpty(){
+    private void signalNotEmpty() {
         //唤醒消费者线程需要先获取弹出锁takeLock
         takeLock.lock();
-        try{
+        try {
             //唤醒一个等待不空的消费者线程
             notEmpty.signal();
-        }finally {
+        } finally {
             takeLock.unlock();
         }
     }
@@ -81,7 +81,7 @@ public class BlockedQueue {
     public void put(Object o) throws InterruptedException {
 //        synchronized (this)
         putLock.lockInterruptibly();
-        try{
+        try {
             while (count.get() == items.length) {
 //                this.wait();
 //                condition.await();
@@ -95,7 +95,7 @@ public class BlockedQueue {
 //            this.notifyAll();
 //            condition.signalAll();
 //            notEmpty.signalAll();
-        }finally {
+        } finally {
             putLock.unlock();
         }
         //唤醒等待队列不空的消费者线程
@@ -107,7 +107,7 @@ public class BlockedQueue {
 //        synchronized (this)
         takeLock.lockInterruptibly();
         Object e = null;
-        try{
+        try {
             //队列不空才执行出队操作
             while (count.get() == 0) {
 //                this.wait();
@@ -120,7 +120,7 @@ public class BlockedQueue {
 //            condition.signalAll();
 //            notFull.signalAll();
 
-        }finally {
+        } finally {
             takeLock.unlock();
         }
 

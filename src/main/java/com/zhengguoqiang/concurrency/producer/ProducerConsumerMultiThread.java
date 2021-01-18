@@ -13,9 +13,9 @@ public class ProducerConsumerMultiThread {
 
     private volatile boolean isProduced = false;
 
-    public void produce(){
-        synchronized (LOCK){
-            while (isProduced){
+    public void produce() {
+        synchronized (LOCK) {
+            while (isProduced) {
                 try {
 //                    System.out.println("Producer Thread " + Thread.currentThread().getName() + " enter waiting...");
                     LOCK.wait();
@@ -30,9 +30,9 @@ public class ProducerConsumerMultiThread {
         }
     }
 
-    public void consumer(){
-        synchronized (LOCK){
-            if (!isProduced){
+    public void consumer() {
+        synchronized (LOCK) {
+            if (!isProduced) {
                 try {
 //                    System.out.println("Consumer Thread " + Thread.currentThread().getName() + " enter waiting...");
                     LOCK.wait();
@@ -48,11 +48,11 @@ public class ProducerConsumerMultiThread {
 
     public static void main(String[] args) {
         ProducerConsumerMultiThread pcm = new ProducerConsumerMultiThread();
-        Stream.of("P1","P2","P3","P4").forEach(name -> {
-            new Thread(name){
+        Stream.of("P1", "P2", "P3", "P4").forEach(name -> {
+            new Thread(name) {
                 @Override
                 public void run() {
-                    while (true){
+                    while (true) {
                         pcm.produce();
                         try {
                             Thread.sleep(10);
@@ -64,11 +64,11 @@ public class ProducerConsumerMultiThread {
             }.start();
         });
 
-        Stream.of("C1","C2","C3","C4").forEach(name -> {
-            new Thread(name){
+        Stream.of("C1", "C2", "C3", "C4").forEach(name -> {
+            new Thread(name) {
                 @Override
                 public void run() {
-                    while (true){
+                    while (true) {
                         pcm.consumer();
                         try {
                             Thread.sleep(10);

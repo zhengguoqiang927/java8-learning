@@ -28,14 +28,14 @@ public class GlobalClassLoader {
         system = (URLClassLoader) getSystemClassLoader();
     }
 
-    private static ClassLoader getSystemClassLoader(){
+    private static ClassLoader getSystemClassLoader() {
         return ClassLoader.getSystemClassLoader();
     }
 
-    public static void addURL2SystemClassLoader(URL url){
+    public static void addURL2SystemClassLoader(URL url) {
         try {
 //            log.info("append jar to classpath:" + url.toString());
-            addURL.invoke(system,url);
+            addURL.invoke(system, url);
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
@@ -45,8 +45,8 @@ public class GlobalClassLoader {
 
     public static void addSystemClassPathFolder(String... dirs) throws IOException {
         List<String> uniqueLibPath = FileHelper.getUniqueLibPath(dirs);
-        for (String path:uniqueLibPath){
-            URL url = new URL("file","",path);
+        for (String path : uniqueLibPath) {
+            URL url = new URL("file", "", path);
             addURL2SystemClassLoader(url);
         }
     }

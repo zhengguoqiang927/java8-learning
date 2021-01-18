@@ -58,7 +58,7 @@ public class ThreadLifeCycle {
         WaitingState.t1.start();
     }
 
-    private static class WaitingState implements Runnable{
+    private static class WaitingState implements Runnable {
         public static Thread t1;
 
         private final Object object = new Object();
@@ -71,7 +71,7 @@ public class ThreadLifeCycle {
             try {
                 //wait(),join(),LockSupport.park();
 //                t.join();
-                synchronized (object){
+                synchronized (object) {
                     object.wait(5000);
                 }
             } catch (InterruptedException e) {
@@ -107,7 +107,7 @@ public class ThreadLifeCycle {
         System.out.println(t.getState());
     }
 
-    private static class DemoThreadTimedWaiting implements Runnable{
+    private static class DemoThreadTimedWaiting implements Runnable {
         @Override
         public void run() {
             try {

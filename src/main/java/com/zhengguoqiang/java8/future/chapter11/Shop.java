@@ -25,7 +25,7 @@ public class Shop {
 //        return calculatePrice(product);
         double price = calculatePrice(product);
         Discount.Code code = Discount.Code.values()[RANDOM.nextInt(Discount.Code.values().length)];
-        return String.format("%s:%.2f:%s",name,price,code);
+        return String.format("%s:%.2f:%s", name, price, code);
     }
 
     private double calculatePrice(String product) {

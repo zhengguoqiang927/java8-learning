@@ -22,7 +22,7 @@ public class JDKFuture {
             }
         });
 
-        while (!future.isDone()){
+        while (!future.isDone()) {
             Thread.sleep(10);
         }
         System.out.println(future.get());

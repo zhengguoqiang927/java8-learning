@@ -80,7 +80,7 @@ public class Account {
 //                e.printStackTrace();
 //            }
 //        }
-        allocator.apply(this,target);
+        allocator.apply(this, target);
         System.out.println(this.name + " 和 " + target.name + " 账户达到可转账状态！！！");
         try {
             synchronized (this) {
@@ -100,16 +100,17 @@ public class Account {
     //方案五
     //破坏死锁的循环等待条件：通过对资源排序，然后按照从小到大的顺序申请资源。
     private int id;
-    void transfer5(Account target,int amt){
+
+    void transfer5(Account target, int amt) {
         Account left = this;
         Account right = target;
-        if (this.id > target.id){
+        if (this.id > target.id) {
             left = target;
             right = this;
         }
-        synchronized (left){
-            synchronized (right){
-                if (this.balance > amt){
+        synchronized (left) {
+            synchronized (right) {
+                if (this.balance > amt) {
                     this.balance -= amt;
                     target.balance += amt;
                 }
@@ -165,8 +166,8 @@ class Allocator {
 //    }
 
     //等待-通知机制优化
-    synchronized void apply(Object from,Object to){
-        while (als.contains(from) || als.contains(to)){
+    synchronized void apply(Object from, Object to) {
+        while (als.contains(from) || als.contains(to)) {
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -177,7 +178,7 @@ class Allocator {
         als.add(to);
     }
 
-    synchronized void free(Object from,Object to){
+    synchronized void free(Object from, Object to) {
         als.remove(from);
         als.remove(to);
         //尽量使用notifyAll()；notify()会随机的唤醒等待队列中的一个线程，notifyAll()会唤醒等待队列中的所有线程。

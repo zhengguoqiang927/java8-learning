@@ -12,7 +12,7 @@ public class Main {
         MyClassLoaderParentFirst classloader = new MyClassLoaderParentFirst(Thread.currentThread().getContextClassLoader().getParent());
         Class<?> aClass = classloader.loadClass("com.zhengguoqiang.senior.classloader.TestA");
         Method main = aClass.getDeclaredMethod("main", String[].class);
-        main.invoke(null,new Object[]{args});
+        main.invoke(null, new Object[]{args});
 
 
         //获取当前类相对路径的资源，return：file:/Users/zhengguoqiang/Projects/IdeaProjects/zhengguoqiang/java8-learning/target/classes/com/zhengguoqiang/senior/classloader/
@@ -30,19 +30,19 @@ public class Main {
             throw new ClassNotFoundException();
         }
         File file = new File(resource.toURI());
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new FileNotFoundException();
         }
 
-        try(BufferedInputStream baos = new BufferedInputStream(new FileInputStream(file))){
+        try (BufferedInputStream baos = new BufferedInputStream(new FileInputStream(file))) {
             StringBuilder sb = new StringBuilder();
             byte[] buffer = new byte[4096];
             int bytesNum = 0;
-            while ((bytesNum = baos.read(buffer)) != -1){
-                sb.append(new String(buffer,0,bytesNum));
+            while ((bytesNum = baos.read(buffer)) != -1) {
+                sb.append(new String(buffer, 0, bytesNum));
             }
             System.out.println(sb.toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -22,16 +22,16 @@ public class FutureInAction {
         System.out.println(future.get());
         System.out.println(future.get());
         System.out.println("process other business logic");
-        while (!future.isDone()){
+        while (!future.isDone()) {
             Thread.sleep(10);
         }
         System.out.println(future.get());
     }
 
-    private static <T> Future<T> invoke(Callable<T> callable){
+    private static <T> Future<T> invoke(Callable<T> callable) {
         AtomicReference<T> reference = new AtomicReference<>();
         AtomicBoolean status = new AtomicBoolean(false);
-        Thread t = new Thread(()->{
+        Thread t = new Thread(() -> {
             T value = callable.action();
             reference.set(value);
             status.set(true);
@@ -51,12 +51,13 @@ public class FutureInAction {
         };
     }
 
-    private interface Future<T>{
+    private interface Future<T> {
         T get();
+
         boolean isDone();
     }
 
-    private interface Callable<T>{
+    private interface Callable<T> {
         T action();
     }
 }

@@ -10,7 +10,7 @@ public class SystemOutPerformanceTest {
 
     private static Logger logger = Logger.getLogger(SystemOutPerformanceTest.class.getName());
 
-//    private static final String line1 = "[stdout] very very long line very very long line very very long line very very long line very very long line very very long line very very long line very very long line";
+    //    private static final String line1 = "[stdout] very very long line very very long line very very long line very very long line very very long line very very long line very very long line very very long line";
     private static final String line1 = "[stdout] very very long line";
     private static final String line2 = "[file] very very long line very very long line very very long line very very long line very very long line very very long line very very long line very very long line\n";
     private static final String line3 = "[/dev/stdout] very very long line very very long line very very long line very very long line very very long line very very long line very very long line very very long line\n";
@@ -26,9 +26,9 @@ public class SystemOutPerformanceTest {
         long t2 = file(tempFile, line2, count);
 
         File f2 = new File("/dev/stdout");
-        long t3 = file(f2,line3,count);
+        long t3 = file(f2, line3, count);
 
-        logger.info("lines:" + String.format("%,d",count));
+        logger.info("lines:" + String.format("%,d", count));
         System.out.println("lines: " + String.format("%,d", count));
         System.out.println("System.out.println: " + String.format("%,d", t1) + " ms");
         System.out.println("file: " + String.format("%,d", t2) + " ms");
@@ -45,14 +45,14 @@ public class SystemOutPerformanceTest {
         return end - start;
     }
 
-    private static long file(File file,String line,int count) throws IOException {
+    private static long file(File file, String line, int count) throws IOException {
         byte[] bytes = line.getBytes();
         try (
-            FileOutputStream fos = new FileOutputStream(file);
-            BufferedOutputStream bos = new BufferedOutputStream(fos,1024 * 4);
-        ){
+                FileOutputStream fos = new FileOutputStream(file);
+                BufferedOutputStream bos = new BufferedOutputStream(fos, 1024 * 4);
+        ) {
             long start = System.currentTimeMillis();
-            for (int i = 0;i<count;i++){
+            for (int i = 0; i < count; i++) {
                 bos.write(bytes);
             }
             bos.flush();

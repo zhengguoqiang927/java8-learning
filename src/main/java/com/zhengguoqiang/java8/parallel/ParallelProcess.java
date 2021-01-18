@@ -22,7 +22,7 @@ public class ParallelProcess {
     }
 
     private static long parallelStream2(long limit) {
-        return LongStream.rangeClosed(0,limit).parallel().sum();
+        return LongStream.rangeClosed(0, limit).parallel().sum();
     }
 
     private static long normalAdd(long limit) {

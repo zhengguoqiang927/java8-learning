@@ -17,8 +17,8 @@ public class TicketWindow extends Thread {
 
     @Override
     public void run() {
-        while (index <= MAX){
-            System.out.println("柜台：" + name +"当前的号码：" + index++);
+        while (index <= MAX) {
+            System.out.println("柜台：" + name + "当前的号码：" + index++);
         }
     }
 }

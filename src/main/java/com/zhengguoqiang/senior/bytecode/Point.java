@@ -7,7 +7,7 @@ public class Point {
     private int x;
     private int y;
 
-    public void move(int x,int y){
+    public void move(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -29,7 +29,7 @@ public class Point {
    putfield:putfield is setting a field x of our object. All operations are analogical for field y
      */
 
-    public void print(){
+    public void print() {
         System.out.println("x=" + this.x + "," + "y=" + this.y);
     }
 }

@@ -12,7 +12,7 @@ public class CompletableFutureTimeout {
         hypotheticalApp();
     }
 
-    public static void timeoutSync(){
+    public static void timeoutSync() {
         CompletableFuture timeoutFuture = new CompletableFuture();
         try {
             timeoutFuture.get(1000, TimeUnit.MILLISECONDS);
@@ -21,7 +21,7 @@ public class CompletableFutureTimeout {
         }
     }
 
-    public static int getValue(){
+    public static int getValue() {
         System.out.println(Thread.currentThread().getName());
         System.out.println("I am Called");
         try {
@@ -33,17 +33,17 @@ public class CompletableFutureTimeout {
         return 10;
     }
 
-    public static void timeoutAsync(){
+    public static void timeoutAsync() {
         CompletableFuture timeoutFuture = new CompletableFuture();
         ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
-        scheduledExecutorService.schedule(() -> timeoutFuture.completeExceptionally(new TimeoutException()),1000,TimeUnit.MILLISECONDS);
+        scheduledExecutorService.schedule(() -> timeoutFuture.completeExceptionally(new TimeoutException()), 1000, TimeUnit.MILLISECONDS);
         CompletableFuture<Object> finalFuture = CompletableFuture.anyOf(timeoutFuture, CompletableFuture.supplyAsync(CompletableFutureTimeout::getValue));
         finalFuture.join();
     }
 
     public static void hypotheticalApp() {
-        ExecutorService executor = new ThreadPoolExecutor(10,10,0l,
-                TimeUnit.MILLISECONDS,new LinkedBlockingDeque<>());
+        ExecutorService executor = new ThreadPoolExecutor(10, 10, 0l,
+                TimeUnit.MILLISECONDS, new LinkedBlockingDeque<>());
         ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
         CompletableFuture[] allFutures = new CompletableFuture[10];
 //        for (int i=0;i<10;i++){
@@ -70,9 +70,9 @@ public class CompletableFutureTimeout {
 
     public static ScheduledThreadPoolExecutor delay = new ScheduledThreadPoolExecutor(1);
 
-    public static <T> CompletableFuture<T> timeoutAfter(long timeout,TimeUnit unit){
+    public static <T> CompletableFuture<T> timeoutAfter(long timeout, TimeUnit unit) {
         CompletableFuture<T> result = new CompletableFuture<>();
-        delay.schedule(()-> result.completeExceptionally(new TimeoutException("查询数据超时异常")),timeout,unit);
+        delay.schedule(() -> result.completeExceptionally(new TimeoutException("查询数据超时异常")), timeout, unit);
         return result;
     }
 }

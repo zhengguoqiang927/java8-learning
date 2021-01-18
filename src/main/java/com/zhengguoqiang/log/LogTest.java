@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 public class LogTest {
 
-    public void print(String s){
+    public void print(String s) {
         Log log = LogFactory.getLog(LogTest.class);
         log.info("xxxx");
     }

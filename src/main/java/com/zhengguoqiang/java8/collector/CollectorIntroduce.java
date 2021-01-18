@@ -27,9 +27,9 @@ public class CollectorIntroduce {
         Optional.ofNullable(groupByCollector(apples)).ifPresent(System.out::println);
     }
 
-    public static Map<String,List<Apple>> groupByNormal(List<Apple> apples){
-        Map<String,List<Apple>> map = new HashMap<>();
-        for (Apple apple:apples){
+    public static Map<String, List<Apple>> groupByNormal(List<Apple> apples) {
+        Map<String, List<Apple>> map = new HashMap<>();
+        for (Apple apple : apples) {
             //老的实现
             /*List<Apple> list = map.get(apple.getColor());
             if (list == null){
@@ -38,13 +38,13 @@ public class CollectorIntroduce {
             }
             list.add(apple);*/
             //java8之后普通实现
-            map.computeIfAbsent(apple.getColor(),k -> new ArrayList<>()).add(apple);
+            map.computeIfAbsent(apple.getColor(), k -> new ArrayList<>()).add(apple);
         }
         return map;
     }
 
-    public static Map<String,List<Apple>> groupByStream(List<Apple> apples){
-        Map<String,List<Apple>> map = new HashMap<>();
+    public static Map<String, List<Apple>> groupByStream(List<Apple> apples) {
+        Map<String, List<Apple>> map = new HashMap<>();
         apples.forEach(apple -> {
             List<Apple> colorList = Optional.ofNullable(map.get(apple.getColor())).orElseGet(() -> {
                 List<Apple> list = new ArrayList<>();
@@ -56,7 +56,7 @@ public class CollectorIntroduce {
         return map;
     }
 
-    public static Map<String,List<Apple>> groupByCollector(List<Apple> apples){
+    public static Map<String, List<Apple>> groupByCollector(List<Apple> apples) {
         return apples.stream().collect(Collectors.groupingBy(Apple::getColor));
     }
 }

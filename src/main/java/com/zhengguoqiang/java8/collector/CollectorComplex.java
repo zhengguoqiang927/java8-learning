@@ -64,25 +64,25 @@ public class CollectorComplex {
                 .ifPresent(System.out::println);
     }
 
-    private static void testGroupingByFunction(List<Dish> menu){
+    private static void testGroupingByFunction(List<Dish> menu) {
         System.out.println("testGroupingByFunction");
         Optional.ofNullable(menu.stream().collect(Collectors.groupingBy(Dish::getType)))
                 .ifPresent(System.out::println);
     }
 
-    private static void testGroupingByFunctionAndReduce(List<Dish> menu){
+    private static void testGroupingByFunctionAndReduce(List<Dish> menu) {
         System.out.println("testGroupingByFunctionAndReduce");
         Map<Dish.Type, Double> collect = menu.stream().collect(Collectors.groupingBy(Dish::getType, Collectors.averagingDouble(Dish::getCalories)));
         Optional.ofNullable(collect).ifPresent(System.out::println);
     }
 
-    private static void testGroupingByFunctionAndSupplierAndReduce(List<Dish> menu){
+    private static void testGroupingByFunctionAndSupplierAndReduce(List<Dish> menu) {
         System.out.println("testGroupingByFunctionAndSupplierAndReduce");
         TreeMap<Dish.Type, Long> collect = menu.stream().collect(Collectors.groupingBy(Dish::getType, TreeMap::new, Collectors.counting()));
         Optional.ofNullable(collect).ifPresent(System.out::println);
     }
 
-    private static void testSummarizingInt(List<Dish> menu){
+    private static void testSummarizingInt(List<Dish> menu) {
         System.out.println("testSummarizingInt");
         IntSummaryStatistics collect = menu.stream().collect(Collectors.summarizingInt(Dish::getCalories));
         Optional.ofNullable(collect).ifPresent(System.out::println);
