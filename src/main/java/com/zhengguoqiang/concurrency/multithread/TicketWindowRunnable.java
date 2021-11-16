@@ -11,13 +11,13 @@ public class TicketWindowRunnable implements Runnable {
 
     @Override
     public void run() {
-        while (index <= MAX){
+        while (index <= MAX) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println(Thread.currentThread().getName() +"当前的号码：" + index++);
+            System.out.println(Thread.currentThread().getName() + "当前的号码：" + index++);
         }
     }
 }

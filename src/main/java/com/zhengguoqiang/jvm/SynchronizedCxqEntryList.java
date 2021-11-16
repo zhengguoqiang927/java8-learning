@@ -3,9 +3,9 @@ package com.zhengguoqiang.jvm;
 public class SynchronizedCxqEntryList {
     private static final Object lock = new Object();
 
-    public void startThreadA(){
-        new Thread(()->{
-            synchronized (lock){
+    public void startThreadA() {
+        new Thread(() -> {
+            synchronized (lock) {
                 System.out.println("A get lock.");
                 try {
                     Thread.sleep(500);
@@ -14,23 +14,23 @@ public class SynchronizedCxqEntryList {
                 }
                 System.out.println("A release lock.");
             }
-        },"Thread-A").start();
+        }, "Thread-A").start();
     }
 
-    public void startThreadB(){
-        new Thread(()->{
-            synchronized (lock){
+    public void startThreadB() {
+        new Thread(() -> {
+            synchronized (lock) {
                 System.out.println("B get lock.");
             }
-        },"Thread-B").start();
+        }, "Thread-B").start();
     }
 
-    public void startThreadC(){
-        new Thread(()->{
-            synchronized (lock){
+    public void startThreadC() {
+        new Thread(() -> {
+            synchronized (lock) {
                 System.out.println("C get lock.");
             }
-        },"Thread-B").start();
+        }, "Thread-B").start();
     }
 
     public static void main(String[] args) {

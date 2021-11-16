@@ -14,9 +14,9 @@ public class FileHelper {
         List<String> jarList = new ArrayList<>();
         List<String> fileNameList = new ArrayList<>();
 
-        for (String dir:dirs){
+        for (String dir : dirs) {
             List<File> fileList = FileHelper.getFiles(dir, "jar");
-            if (fileList != null){
+            if (fileList != null) {
                 for (File file : fileList) {
                     if (!fileNameList.contains(file.getName())) {
                         jarList.add(file.getCanonicalPath());
@@ -28,19 +28,19 @@ public class FileHelper {
         return jarList;
     }
 
-    private static List<File> getFiles(String dir, String... extension){
+    private static List<File> getFiles(String dir, String... extension) {
         File file = new File(dir);
-        if (!file.isDirectory()){
+        if (!file.isDirectory()) {
 //            log.info("this is not a directory...");
             return null;
-        }else {
+        } else {
             List<File> fileList = new ArrayList<>();
-            getFiles(file,fileList,extension);
+            getFiles(file, fileList, extension);
             return fileList;
         }
     }
 
-    private static void getFiles(File file,List<File> fileList,String... extension){
+    private static void getFiles(File file, List<File> fileList, String... extension) {
         File[] files = file.listFiles();
         if (files == null) return;
 

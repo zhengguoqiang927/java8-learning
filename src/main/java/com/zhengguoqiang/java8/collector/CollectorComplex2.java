@@ -42,94 +42,94 @@ public class CollectorComplex2 {
                 });
     }
 
-    private static void testGroupingByConcurrentCollector(){
+    private static void testGroupingByConcurrentCollector() {
         System.out.println("testGroupingByConcurrentCollector");
-        Optional.ofNullable(menu.stream().collect(Collectors.groupingByConcurrent(Dish::getType,Collectors.counting())))
+        Optional.ofNullable(menu.stream().collect(Collectors.groupingByConcurrent(Dish::getType, Collectors.counting())))
                 .ifPresent(d -> {
                     System.out.println(d.getClass());
                     System.out.println(d);
                 });
     }
 
-    private static void testGroupingByConcurrentCollectorAndSupplier(){
+    private static void testGroupingByConcurrentCollectorAndSupplier() {
         System.out.println("testGroupingByConcurrentCollectorAndSupplier");
         Optional.ofNullable(menu.stream().collect(
                 Collectors.groupingByConcurrent(Dish::getType,
-                        ConcurrentSkipListMap::new,Collectors.counting())))
+                        ConcurrentSkipListMap::new, Collectors.counting())))
                 .ifPresent(d -> {
                     System.out.println(d.getClass());
                     System.out.println(d);
                 });
     }
 
-    private static void testJoiningWithDelimiter(){
+    private static void testJoiningWithDelimiter() {
         System.out.println("testJoiningWithDelimiter");
         Optional.ofNullable(menu.stream().map(Dish::getName).collect(Collectors.joining(",")))
                 .ifPresent(System.out::println);
     }
 
-    private static void testJoiningWithDelimiterAndPrefixAndSuffix(){
+    private static void testJoiningWithDelimiterAndPrefixAndSuffix() {
         System.out.println("testJoiningWithDelimiterAndPrefixAndSuffix");
         Optional.ofNullable(menu.stream().map(Dish::getName)
-                .collect(Collectors.joining(",","Names:[","]")))
+                .collect(Collectors.joining(",", "Names:[", "]")))
                 .ifPresent(System.out::println);
     }
 
-    private static void testMapping(){
+    private static void testMapping() {
         System.out.println("testMapping");
         Optional.ofNullable(menu.stream()
-                .collect(Collectors.mapping(Dish::getName,Collectors.joining(","))))
+                .collect(Collectors.mapping(Dish::getName, Collectors.joining(","))))
                 .ifPresent(System.out::println);
     }
 
-    private static void testMaxBy(){
+    private static void testMaxBy() {
         System.out.println("testMaxBy");
 //        menu.stream().collect(Collectors.maxBy(Comparator.comparingInt(Dish::getCalories)))
 //                .ifPresent(System.out::println);
         menu.stream().max(Comparator.comparingInt(Dish::getCalories)).ifPresent(System.out::println);
     }
 
-    private static void testMinBy(){
+    private static void testMinBy() {
         System.out.println("testMinBy");
 //        menu.stream().collect(Collectors.minBy(Comparator.comparingInt(Dish::getCalories)))
 //                .ifPresent(System.out::println);
         menu.stream().min(Comparator.comparingInt(Dish::getCalories)).ifPresent(System.out::println);
     }
 
-    private static void testPartitioningBy(){
+    private static void testPartitioningBy() {
         System.out.println("testPartitioningBy");
         Optional.ofNullable(menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian)))
                 .ifPresent(System.out::println);
     }
 
-    private static void testPartitioningByWithCollector(){
+    private static void testPartitioningByWithCollector() {
         System.out.println("testPartitioningByWithCollector");
-        Optional.ofNullable(menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian,Collectors.counting())))
+        Optional.ofNullable(menu.stream().collect(Collectors.partitioningBy(Dish::isVegetarian, Collectors.counting())))
                 .ifPresent(System.out::println);
     }
 
-    private static void testReducing(){
+    private static void testReducing() {
         System.out.println("testReducing");
 //        menu.stream().collect(Collectors.reducing(BinaryOperator.minBy(Comparator.comparingInt(Dish::getCalories))))
 //                .ifPresent(System.out::println);
         menu.stream().reduce(BinaryOperator.minBy(Comparator.comparingInt(Dish::getCalories))).ifPresent(System.out::println);
     }
 
-    private static void testReducingWithIdentity(){
+    private static void testReducingWithIdentity() {
         System.out.println("testReducingWithIdentity");
 //        Integer collect = menu.stream().map(Dish::getCalories).collect(Collectors.reducing(0, (d1, d2) -> d1 + d2));
         Integer collect = menu.stream().map(Dish::getCalories).reduce(0, (d1, d2) -> d1 + d2);
         System.out.println(collect);
     }
 
-    private static void testReducingWithIdentityAndMapper(){
+    private static void testReducingWithIdentityAndMapper() {
         System.out.println("testReducingWithIdentityAndMapper");
 //        Integer collect = menu.stream().collect(Collectors.reducing(0, Dish::getCalories, (d1, d2) -> d1 + d2));
         Integer collect = menu.stream().map(Dish::getCalories).reduce(0, (d1, d2) -> d1 + d2);
         System.out.println(collect);
     }
 
-    private static void testSummingDouble(){
+    private static void testSummingDouble() {
         System.out.println("testSummingDouble");
 //        Integer collect = menu.stream().collect(Collectors.summingInt(Dish::getCalories));
         Integer collect = menu.stream().mapToInt(Dish::getCalories).sum();

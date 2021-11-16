@@ -9,9 +9,9 @@ public class AutoCloseableResource implements AutoCloseable {
         this.throwExceptionOnClose = throwExceptionOnClose;
     }
 
-    public void doOp(boolean throwException) throws Exception{
+    public void doOp(boolean throwException) throws Exception {
         System.out.println("Resource " + this.name + " doing operation");
-        if (throwException){
+        if (throwException) {
             throw new Exception("Error when calling doOp() on resource " + this.name);
         }
     }
@@ -19,7 +19,7 @@ public class AutoCloseableResource implements AutoCloseable {
     @Override
     public void close() throws Exception {
         System.out.println("Resource " + this.name + " close() called");
-        if (this.throwExceptionOnClose){
+        if (this.throwExceptionOnClose) {
             throw new Exception("Error when trying to close resource " + this.name);
         }
     }
@@ -34,22 +34,22 @@ public class AutoCloseableResource implements AutoCloseable {
         }
     }
 
-    public static void tryWithResourcesSingleResource() throws Exception{
-        try(AutoCloseableResource resource = new AutoCloseableResource("One",true)){
+    public static void tryWithResourcesSingleResource() throws Exception {
+        try (AutoCloseableResource resource = new AutoCloseableResource("One", true)) {
             resource.doOp(true);
-        }catch (Exception e){
+        } catch (Exception e) {
 //            e.printStackTrace();
             Throwable[] suppressed = e.getSuppressed();
             System.out.println("interal suppressed size:" + suppressed.length);
             throw e;
-        }finally {
+        } finally {
             throw new Exception("Hey, an exception from the finally block");
         }
     }
 
-    public static void tryWithResourcesTwoResource() throws Exception{
-        try (AutoCloseableResource resourceOne = new AutoCloseableResource("One",true);
-        AutoCloseableResource resourceTwo = new AutoCloseableResource("Two",true)){
+    public static void tryWithResourcesTwoResource() throws Exception {
+        try (AutoCloseableResource resourceOne = new AutoCloseableResource("One", true);
+             AutoCloseableResource resourceTwo = new AutoCloseableResource("Two", true)) {
             resourceOne.doOp(true);
             resourceTwo.doOp(false);
         }

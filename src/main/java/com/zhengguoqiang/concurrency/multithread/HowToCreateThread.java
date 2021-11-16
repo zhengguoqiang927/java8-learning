@@ -1,14 +1,14 @@
 package com.zhengguoqiang.concurrency.multithread;
 
 public class HowToCreateThread {
-    static class MyThread extends Thread{
+    static class MyThread extends Thread {
         @Override
         public void run() {
             System.out.println("Hello MyThread");
         }
     }
 
-    static class MyRunnable implements Runnable{
+    static class MyRunnable implements Runnable {
         @Override
         public void run() {
             System.out.println("Hello MyRunnable");

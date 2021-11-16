@@ -21,14 +21,14 @@ public class AccumulatorRecursiveAction extends RecursiveAction {
 
     @Override
     protected void compute() {
-        if (end - start < threshold){
-            for (int i = start;i<end;i++){
+        if (end - start < threshold) {
+            for (int i = start; i < end; i++) {
                 AccumulatorHelper.accumulate(data[i]);
             }
-        }else {
-            int mid = (start + end)/2;
-            AccumulatorRecursiveAction left = new AccumulatorRecursiveAction(start,mid,data);
-            AccumulatorRecursiveAction right = new AccumulatorRecursiveAction(mid,end,data);
+        } else {
+            int mid = (start + end) / 2;
+            AccumulatorRecursiveAction left = new AccumulatorRecursiveAction(start, mid, data);
+            AccumulatorRecursiveAction right = new AccumulatorRecursiveAction(mid, end, data);
             left.fork();
             right.fork();
             left.join();
@@ -36,14 +36,14 @@ public class AccumulatorRecursiveAction extends RecursiveAction {
         }
     }
 
-    static class AccumulatorHelper{
+    static class AccumulatorHelper {
         private static final AtomicInteger result = new AtomicInteger(0);
 
-        static void accumulate(int value){
+        static void accumulate(int value) {
             result.getAndAdd(value);
         }
 
-        static int getResult(){
+        static int getResult() {
             return result.get();
         }
     }

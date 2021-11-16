@@ -124,7 +124,7 @@ public class Solution {
         BigDecimal f = new BigDecimal(fenzi);
         double t = Math.sqrt(fenmuA) * Math.sqrt(fenmuB);
         BigDecimal m = new BigDecimal(t);
-        return new TargetObject(seedKey, targetKey, f.divide(m,8,BigDecimal.ROUND_HALF_UP).doubleValue());
+        return new TargetObject(seedKey, targetKey, f.divide(m, 8, BigDecimal.ROUND_HALF_UP).doubleValue());
     }
 
 

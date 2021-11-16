@@ -10,7 +10,7 @@ import java.util.concurrent.*;
 public class ThreadPoolTest {
 
     public static void main(String[] args) {
-        try(Scanner in = new Scanner(System.in)){
+        try (Scanner in = new Scanner(System.in)) {
             System.out.println("Enter base directory (e.g. /usr/local/jdk5.0/src): ");
             String directory = in.nextLine();
             System.out.print("Enter keyword (e.g. volatile): ");
@@ -23,19 +23,19 @@ public class ThreadPoolTest {
 
             try {
                 System.out.println(result.get() + " matching files.");
-            }catch (ExecutionException e){
-                e. printStackTrace();
-             }catch (InterruptedException e){
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            pool.shutdown() ;
+            pool.shutdown();
             int largestPoolSize = ((ThreadPoolExecutor) pool).getLargestPoolSize();
             System.out.println("largest pool size=" + largestPoolSize);
         }
     }
 }
 
-class MatchCounter implements Callable<Integer>{
+class MatchCounter implements Callable<Integer> {
 
     private File directory;
     private String keyword;
@@ -51,43 +51,43 @@ class MatchCounter implements Callable<Integer>{
     @Override
     public Integer call() throws Exception {
         count = 0;
-        try{
+        try {
             File[] files = directory.listFiles();
             List<Future<Integer>> results = new ArrayList<>();
-            for (File file:files){
-                if (file.isDirectory()){
-                    MatchCounter counter = new MatchCounter(file,keyword,pool);
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    MatchCounter counter = new MatchCounter(file, keyword, pool);
                     Future<Integer> submit = pool.submit(counter);
                     results.add(submit);
-                }else {
+                } else {
                     if (search(file)) count++;
                 }
             }
 
-            for (Future<Integer> future:results){
-                try{
+            for (Future<Integer> future : results) {
+                try {
                     count += future.get();
-                }catch (ExecutionException e){
+                } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
             }
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return count;
     }
 
-    public boolean search(File file){
-        try{
-            try(Scanner in = new Scanner(file,"UTF-8")){
+    public boolean search(File file) {
+        try {
+            try (Scanner in = new Scanner(file, "UTF-8")) {
                 boolean found = false;
-                while (!found && in.hasNextLine()){
+                while (!found && in.hasNextLine()) {
                     String line = in.nextLine();
                     if (line.contains(keyword)) found = true;
                 }
                 return found;
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             return false;
         }
     }

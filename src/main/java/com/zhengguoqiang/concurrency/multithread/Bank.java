@@ -5,7 +5,7 @@ package com.zhengguoqiang.concurrency.multithread;
  */
 public class Bank {
 
-    private static void testVersion1(){
+    private static void testVersion1() {
         Thread t1 = new TicketWindow("一号柜台");
         t1.start();
 
@@ -17,16 +17,16 @@ public class Bank {
         t3.start();
     }
 
-    private static void testVersion2(){
+    private static void testVersion2() {
         final TicketWindowRunnable ticketWindowRunnable =
                 new TicketWindowRunnable();
-        Thread t1 = new Thread(ticketWindowRunnable,"一号柜台");
+        Thread t1 = new Thread(ticketWindowRunnable, "一号柜台");
         t1.start();
 
-        Thread t2 = new Thread(ticketWindowRunnable,"二号柜台");
+        Thread t2 = new Thread(ticketWindowRunnable, "二号柜台");
         t2.start();
 
-        Thread t3 = new Thread(ticketWindowRunnable,"三号柜台");
+        Thread t3 = new Thread(ticketWindowRunnable, "三号柜台");
         t3.start();
     }
 

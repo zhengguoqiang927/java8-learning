@@ -21,7 +21,7 @@ public class LinkedListTest {
         ListIterator<String> aIter = a.listIterator();
         Iterator<String> bIter = b.iterator();
 
-        while (bIter.hasNext()){
+        while (bIter.hasNext()) {
             if (aIter.hasNext()) aIter.next();
             aIter.add(bIter.next());
         }
@@ -29,9 +29,9 @@ public class LinkedListTest {
         System.out.println(a);
 
         bIter = b.iterator();
-        while (bIter.hasNext()){
+        while (bIter.hasNext()) {
             bIter.next();//skip one element
-            if (bIter.hasNext()){
+            if (bIter.hasNext()) {
                 bIter.next();//skip next element
                 bIter.remove();//remove that element
             }

@@ -14,7 +14,7 @@ public class PriorityQueueTest {
     int thresold;
 
 
-    class Task implements Runnable{
+    class Task implements Runnable {
 
         private double num;
 
@@ -25,14 +25,14 @@ public class PriorityQueueTest {
         @Override
         public void run() {
             queue.add(num);
-            if (queue.size() > thresold){
+            if (queue.size() > thresold) {
 //                System.out.println("Thread:" + Thread.currentThread().getName() + ",size:" + queue.size() + ",num:" + num);
                 queue.poll();
             }
         }
     }
 
-    public void process(int capacity){
+    public void process(int capacity) {
         long startTime = System.currentTimeMillis();
         List<Double> result = new ArrayList<>(capacity);
         Random random = new Random();
@@ -41,7 +41,7 @@ public class PriorityQueueTest {
 
         List<CompletableFuture<Void>> list = new ArrayList<>();
 
-        for (int i = 0;i<20_000_000;i++){
+        for (int i = 0; i < 20_000_000; i++) {
             list.add(CompletableFuture.runAsync(new Task(random.nextDouble())));
         }
 
@@ -49,14 +49,13 @@ public class PriorityQueueTest {
 
         System.out.println("size:" + queue.size());
         Double d = null;
-        while ((d = queue.poll()) != null){
+        while ((d = queue.poll()) != null) {
             result.add(d);
         }
         Collections.reverse(result);
         System.out.println("time:" + (System.currentTimeMillis() - startTime));
         result.forEach(System.out::println);
     }
-
 
 
     public static void main(String[] args) {

@@ -22,7 +22,7 @@ public class RecursiveTaskExample extends RecursiveTask<Integer> {
 
     @Override
     protected Integer compute() {
-        if (arr.length > THRESHOLD){
+        if (arr.length > THRESHOLD) {
             return ForkJoinTask.invokeAll(createSubtasks())
                     .stream()
                     .mapToInt(ForkJoinTask::join)

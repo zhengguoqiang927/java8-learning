@@ -1,15 +1,14 @@
 package com.zhengguoqiang;
 
 public class Singleton {
-    private Singleton(){}
+    private Singleton() {
+    }
 
     //饿汉式
 //    private static volatile Singleton singleton = null;
 
 
-
-
-    public static Singleton getInstance(){
+    public static Singleton getInstance() {
 //        if (singleton == null){
 //            synchronized (Singleton.class){
 //                if (singleton == null){
@@ -22,7 +21,7 @@ public class Singleton {
     }
 
 
-    private static class SingletonHolder{
+    private static class SingletonHolder {
         private static final Singleton singleton = new Singleton();
     }
 }

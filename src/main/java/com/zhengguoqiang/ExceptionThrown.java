@@ -1,15 +1,15 @@
 package com.zhengguoqiang;
+
 // Java program to demonstrate exception is thrown
 // how the runTime system searches th call stack
 // to find appropriate exception handler.
-class ExceptionThrown
-{
+class ExceptionThrown {
     // It throws the Exception(ArithmeticException).
     // Appropriate Exception handler is not found within this method.
-    static int divideByZero(int a, int b){
+    static int divideByZero(int a, int b) {
 
         // this statement will cause ArithmeticException(/ by zero)
-        int i = a/b;
+        int i = a / b;
 
         return i;
     }
@@ -19,15 +19,13 @@ class ExceptionThrown
     // on the call stack.
     static int computeDivision(int a, int b) {
 
-        int res =0;
+        int res = 0;
 
-        try
-        {
-            res = divideByZero(a,b);
+        try {
+            res = divideByZero(a, b);
         }
         // doesn't matches with ArithmeticException
-        catch(NumberFormatException ex)
-        {
+        catch (NumberFormatException ex) {
             System.out.println("NumberFormatException is occured");
         }
         return res;
@@ -35,24 +33,22 @@ class ExceptionThrown
 
     // In this method found appropriate Exception handler.
     // i.e. matching catch block.
-    public static void main(String args[]){
+    public static void main(String args[]) {
 
         int a = 1;
         int b = 0;
 
-        try
-        {
-            int i = computeDivision(a,b);
+        try {
+            int i = computeDivision(a, b);
 
         }
 
         // matching ArithmeticException
-        catch(ArithmeticException ex)
-        {
+        catch (ArithmeticException ex) {
             // getMessage will print description of exception(here / by zero)
             System.out.println(ex.getMessage());
             StackTraceElement[] stackTrace = ex.getStackTrace();
-            for (StackTraceElement element:stackTrace){
+            for (StackTraceElement element : stackTrace) {
                 System.out.println(element.toString());
             }
         }

@@ -5,7 +5,7 @@ import java.net.URLClassLoader;
 public class ClassLoaderTree {
     public static void main(String[] args) {
         ClassLoader classLoader = ClassLoaderTree.class.getClassLoader();
-        while (classLoader != null){
+        while (classLoader != null) {
             System.out.println(classLoader.toString());
             classLoader = classLoader.getParent();
         }

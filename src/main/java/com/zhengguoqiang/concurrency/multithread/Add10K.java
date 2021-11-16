@@ -2,9 +2,10 @@ package com.zhengguoqiang.concurrency.multithread;
 
 public class Add10K {
     private long count = 0;
-    private void add10k(){
+
+    private void add10k() {
         int idx = 0;
-        while (idx++ < 10000){
+        while (idx++ < 10000) {
             count += 1;
         }
     }
